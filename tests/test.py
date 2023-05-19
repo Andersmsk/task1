@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import MagicMock
-from main_code_full import DatabaseConnection, JSONFile, XMLFile, main
+from main import DatabaseConnection, JSONFile, XMLFile, main
 
 @pytest.fixture
 def mock_database_connection():

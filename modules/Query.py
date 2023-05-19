@@ -11,13 +11,28 @@ logger = logging.getLogger('query')
 
 
 def execute_query(connection: Database, query: str) -> Any:
-    """Executing query and returning result"""
+    """Execute a query and return the result.
+
+    :param connection: Database connection
+    :type connection: Database
+    :param query: SQL query to be executed
+    :type query: str
+    :return: Query result
+    :rtype: Any
+    """
     connection.execute_query(query)
     return connection.cursor.fetchall()
 
 
 def save_query_result_to_json(result: Any, filename: str) -> None:
-    """Saving query result to JSON file"""
+    """Save query result to a JSON file.
+
+    :param result: Query result
+    :type result: Any
+    :param filename: Name of the output JSON file
+    :type filename: str
+    :rtype: None
+    """
     data = {"columns": [desc[0] for desc in result.description], "rows": [dict(row) for row in result]}
     with open(filename, "w") as f:
         json.dump(data, f)
@@ -25,13 +40,31 @@ def save_query_result_to_json(result: Any, filename: str) -> None:
 
 
 def save_query_result_to_xml(result: Any, filename: str) -> None:
-    """Saving query result to XML file"""
+    """Save query result to an XML file.
+
+    :param result: Query result
+    :type result: Any
+    :param filename: Name of the output XML file
+    :type filename: str
+    :rtype: None
+    """
     data = {"columns": [desc[0] for desc in result.description], "rows": [dict(row) for row in result]}
     XMLFile.save_file(data, filename)
 
 
 def execute_and_save_query_result(connection: Database, query: str, filename: str, file_format: str) -> None:
-    """Executing query and saving result in specified format"""
+    """Execute a query and save the result in the specified format.
+
+    :param connection: Database connection
+    :type connection: Database
+    :param query: SQL query to be executed
+    :type query: str
+    :param filename: Name of the output file
+    :type filename: str
+    :param file_format: Format of the output file ("json" or "xml")
+    :type file_format: str
+    :rtype: None
+    """
     result = execute_query(connection, query)
 
     if file_format == "json":
@@ -43,10 +76,15 @@ def execute_and_save_query_result(connection: Database, query: str, filename: st
 
 
 def execute_query_and_save_xml(database: Any, result: Any, filename: str) -> None:
-    """Executing and saving XML file, the same description as in XML parent class
-    @param database: database connection
-    @param result:
-    @param filename: filename of output json file
+    """Execute a query and save the result to an XML file.
+
+    :param database: Database connection
+    :type database: Any
+    :param result: Query result
+    :type result: Any
+    :param filename: Name of the output XML file
+    :type filename: str
+    :rtype: None
     """
     try:
         # collecting column names
@@ -91,7 +129,16 @@ def execute_query_and_save_xml(database: Any, result: Any, filename: str) -> Non
 
 
 def execute_and_save_query_json(database: Any, result: Any, filename: str) -> None:
-    """ Executing and saving query to JSON file """
+    """Execute a query and save the result to a JSON file.
+
+    :param database: Database connection
+    :type database: Any
+    :param result: Query result
+    :type result: Any
+    :param filename: Name of the output JSON file
+    :type filename: str
+    :rtype: None
+    """
     try:
         # Collecting column names with cursor.description
         column_names = [desc[0] for desc in database.cursor.description]
@@ -112,8 +159,11 @@ def execute_and_save_query_json(database: Any, result: Any, filename: str) -> No
 
 
 def create_indexes(database: Any) -> None:
-    """Creating indexes in database
-    @param database: desc
+    """Create indexes in the database.
+
+    :param database: Database connection
+    :type database: Any
+    :rtype: None
     """
     try:
         create_index_query = 'CREATE INDEX IF NOT EXISTS idx_room_name ON public.room("name")'

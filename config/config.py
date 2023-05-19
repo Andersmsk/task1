@@ -1,7 +1,7 @@
 import logging
 import sys
 
-OUTPUT_PATH = 'path'
+OUTPUT_PATH = 'rusults'
 
 
 # set logging output into console  (logging is more powerful and wide functioned than standard Error e:)

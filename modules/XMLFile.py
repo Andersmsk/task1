@@ -11,7 +11,14 @@ class XMLFile:
 
     @staticmethod
     def save_file(data: dict, filename: str) -> None:
-        """ save incoming data to file (filename)"""
+        """Save incoming data to file (filename).
+
+        :param data: Data to be saved in XML format
+        :type data: dict
+        :param filename: Name of the output XML file
+        :type filename: str
+        :rtype: None
+        """
         try:
             # creating root XML element
             root = ET.Element("data")

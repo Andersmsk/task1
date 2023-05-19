@@ -7,7 +7,6 @@
 # importing dotenv to move out credentials
 # importing logging for logs
 
-import json
 import tqdm
 import argparse
 import os
@@ -22,14 +21,24 @@ from typing import Any
 from config.config import OUTPUT_PATH
 from modules.JSONFile import JSONFile
 from modules.Database import Database
-from modules.query import execute_and_save_query_json, execute_query_and_save_xml
+from modules.Query import execute_and_save_query_json, execute_query_and_save_xml
 
 
 logger = logging.getLogger('main')
 
 
 def main(students_file_path: str, rooms_file_path: str, output_format: str) -> Any:
-    """Main program logic"""
+    """
+    Main program logic
+
+    Args:
+        students_file_path (str): Path to the students file
+        rooms_file_path (str): Path to the rooms file
+        output_format (str): Output format (json or xml)
+
+    Returns:
+        Any: Result of the main program logic
+    """
     # Load the environment variables from the .env file
     config = dotenv_values(".env")
 
@@ -183,10 +192,4 @@ if __name__ == "__main__":
 
     main(args.students, args.rooms, args.format)
 
-# config.py
-# OUTPUT_PATH = 'path'
-# создать конфиг файл для логгера + переменные (папки)dir
-# разделить код на модули
-# добавить описание параметров в док стринги
-#
-""" logger  outputpass """
+
