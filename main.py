@@ -19,6 +19,7 @@ from tqdm import tqdm
 from dotenv import dotenv_values
 from typing import Any
 
+from config.config import OUTPUT_PATH
 from modules.JSONFile import JSONFile
 from modules.Database import Database
 from modules.query import execute_and_save_query_json, execute_query_and_save_xml
@@ -59,9 +60,8 @@ def main(students_file_path: str, rooms_file_path: str, output_format: str) -> A
         logging.error(f"-- Error inserting data {e}")
 
     # Creating folder for result files IF NOT EXISTS
-    results_folder = "results"
-    if not os.path.exists(results_folder):
-        os.makedirs(results_folder)
+    if not os.path.exists(OUTPUT_PATH):
+        os.makedirs(OUTPUT_PATH)
         logging.info("-- Folder 'results' created")
 
     # Executing and saving queries
@@ -80,7 +80,7 @@ def main(students_file_path: str, rooms_file_path: str, output_format: str) -> A
         database.execute_query(query1)  # executing query
         result = database.cursor.fetchall()  # collecting information from query
 
-        filename1 = os.path.join(results_folder, "query1_result")  # join folder name + file name = results/query1_r.js
+        filename1 = f'{OUTPUT_PATH}/query1_result'  # join folder name + file name = results/query1_r.js
         if output_format == "json":  # selecting by user before launch .py
             filename1 += ".json"  # concatenate filename + .json
             execute_and_save_query_json(database, result, filename1)  # executing function for json
@@ -105,7 +105,7 @@ def main(students_file_path: str, rooms_file_path: str, output_format: str) -> A
         database.execute_query(query2)
         result = database.cursor.fetchall()
 
-        filename2 = os.path.join(results_folder, "query2_result")
+        filename2 = f'{OUTPUT_PATH}/query2_result'
         if output_format == "json":
             filename2 += ".json"
             execute_and_save_query_json(database, result, filename2)
@@ -131,7 +131,7 @@ def main(students_file_path: str, rooms_file_path: str, output_format: str) -> A
         database.execute_query(query3)
         result = database.cursor.fetchall()
 
-        filename3 = os.path.join(results_folder, "query3_result")
+        filename3 = f'{OUTPUT_PATH}/query3_result'
         if output_format == "json":
             filename3 += ".json"
             execute_and_save_query_json(database, result, filename3)
@@ -156,7 +156,7 @@ def main(students_file_path: str, rooms_file_path: str, output_format: str) -> A
         database.execute_query(query4)
         result = database.cursor.fetchall()
 
-        filename4 = os.path.join(results_folder, "query4_result")
+        filename4 = f'{OUTPUT_PATH}/query4_result'
         if output_format == "json":
             filename4 += ".json"
             execute_and_save_query_json(database, result, filename4)
@@ -172,9 +172,7 @@ def main(students_file_path: str, rooms_file_path: str, output_format: str) -> A
 
 
 if __name__ == "__main__":
-    logger = logging.getLogger('task1')
-    logger.setLevel(logging.DEBUG)
-    logging.info('starting job')
+
     parser = argparse.ArgumentParser(description="Database Query and Export \
                                                  --example Python file.py source/students.json source/rooms.json json")
     parser.add_argument("students", type=str, help="Path to the students file")
@@ -190,3 +188,5 @@ if __name__ == "__main__":
 # создать конфиг файл для логгера + переменные (папки)dir
 # разделить код на модули
 # добавить описание параметров в док стринги
+#
+""" logger  outputpass """
